@@ -59,9 +59,9 @@ async def handle_webhook(request: Request):
     if "photo" in message:
         logging.info("📝 接收到业务图像，启动处理流...")
         file_id = message["photo"][-1]["file_id"]
-        file_info = requests.get(f"[https://api.telegram.org/bot](https://api.telegram.org/bot){TELEGRAM_TOKEN}/getFile?file_id={file_id}").json()
-        image_data = requests.get(f"[https://api.telegram.org/file/bot](https://api.telegram.org/file/bot){TELEGRAM_TOKEN}/{file_info['result']['file_path']}").content
-
+        # ✅ 正确代码（纯净的 URL 字符串）
+        file_info = requests.get(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/getFile?file_id={file_id}").json()
+        image_data = requests.get(f"https://api.telegram.org/file/bot{TELEGRAM_TOKEN}/{file_info['result']['file_path']}").content
     try:
         if image_data:
             # 4. 调用 Gemini 3.1 多模态能力
